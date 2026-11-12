@@ -28,24 +28,24 @@ setError(err.message)
 };
 fetchTasks()
 },[])
-const toggleCompleted=async(task)=>{
-setActionError(null);
-setUpdatingId(task.id)
-try{
-const res=await fetch(`${API_URL}/api/tasks/${id}`,{
-    method:"PATCH",
-    headers:{"Content-Type":"application/json"},
-    body:JSON.stringify({completed:!task.completd}),
-});
-if(!res.ok)throw new Error(`Update failed (${res.status})`)
-const updated=await res.json();
-setTasks((prev)=>prev.map((t)=>(t._id===updated._id?updated:t)));
-}catch(err){
-    setActionError(err.message)
-}finally{
-    setUpdatingId(null)
-}
-}
+const toggleCompleted = async (task) => {
+  setActionError(null);
+  setUpdatingId(task._id);
+  try {
+    const res = await fetch(`${API_URL}/api/tasks/${task._id}`, {
+      method: "PATCH",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ completed: !task.completed }),
+    });
+    if (!res.ok) throw new Error(`Update failed (${res.status})`);
+    const updated = await res.json();
+    setTasks((prev) => prev.map((t) => (t._id === updated._id ? updated : t)));
+  } catch (err) {
+    setActionError(err.message);
+  } finally {
+    setUpdatingId(null);
+  }
+};
  if (loading) return <p className="muted">Loading...</p>;
   if (error) return <div className="error">Error: {error}</div>;
   const shown=tasks.filter((task)=>{

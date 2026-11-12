@@ -1,7 +1,7 @@
 // pages/CreateTask.jsx
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-
+import { API_URL } from "../config";
 function CreateTask() {
   const [title, setTitle] = useState("");
   const [error, setError] = useState(null);
